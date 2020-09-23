@@ -2,10 +2,7 @@
   <div class="ct">
     <div class="banner">
       <div class="thumbnail-banner">
-        <img
-          src="https://previews.123rf.com/images/nataliias/nataliias1812/nataliias181200017/127109518-english-language-hand-drawn-doodles-and-lettering-education-banner-vector-illustration-.jpg"
-          alt="banner"
-        />
+        <img src="~assets/images/banner.jpg" alt="banner" />
       </div>
     </div>
     <div class="popular-decks">

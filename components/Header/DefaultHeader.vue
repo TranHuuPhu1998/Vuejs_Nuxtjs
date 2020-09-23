@@ -26,11 +26,19 @@ header {
   ul {
     display: flex;
     flex-direction: row;
-  }
-  ul li {
-    list-style: none;
-    padding: 10px;
-    margin: 10px;
+    li {
+      list-style: none;
+      padding: 10px;
+      margin: 10px;
+      a {
+        &:hover {
+          text-decoration: underline;
+        }
+        &.nuxt-link-exact-active {
+          color: red;
+        }
+      }
+    }
   }
 }
 </style>
