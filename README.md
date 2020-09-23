@@ -19,5 +19,6 @@ $ npm run generate
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
-## #16 | Cải thiện trang chủ trong dự án Nuxt.js - RHP Team
+### 19 | Tạo Modal Plugins thông minh tùy chỉnh với slots trong dự án Nuxt.js - RHP Team
+
 
