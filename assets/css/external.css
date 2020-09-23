@@ -1,0 +1,10 @@
+body{
+    font-family: 'Open Sans', sans-serif;
+}
+ul ,ol{
+    list-style:none;
+}
+a, a:hover{
+    text-decoration: none;
+
+}
