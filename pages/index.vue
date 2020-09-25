@@ -8,19 +8,9 @@
     <div class="popular-decks">
       <h3 class="text_center my_3">3 Popular Decks for you</h3>
       <div class="r">
-        <div class="c_4">
+        <div v-for="deck in decks" :key="deck.id" class="c_4">
           <div class="card">
-            <p>Deck1</p>
-          </div>
-        </div>
-        <div class="c_4">
-          <div class="card">
-            <p>Deck2</p>
-          </div>
-        </div>
-        <div class="c_4">
-          <div class="card">
-            <p>Deck3</p>
+            <p>{{ deck.name }}</p>
           </div>
         </div>
       </div>
@@ -29,7 +19,26 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      decks: [
+        {
+          _id: 1,
+          name: 'deck 1',
+        },
+        {
+          _id: 2,
+          name: 'deck 2',
+        },
+        {
+          _id: 3,
+          name: 'deck 3',
+        },
+      ],
+    }
+  },
+}
 </script>
 <style lang="scss" scoped>
 .thumbnail-banner {

@@ -8,69 +8,97 @@
         </button>
       </div>
       <ul class="decks-list">
-        <li>
-          <nuxt-link class="deck" to="/decks/1">
-            <div class="card deck-card">
-              <img
-                src="https://img.freepik.com/free-vector/english-word-education-banner_66675-157.jpg?size=626&ext=jpg"
-                alt="Thumbnai card"
-              />
-              <div class="card_body">
-                <h3>Title card content</h3>
-                <p>Description card content</p>
-              </div>
-            </div>
-          </nuxt-link>
-        </li>
-        <li>
-          <nuxt-link class="deck" to="/decks/2">
-            <div class="card deck-card">
-              <img
-                src="https://img.freepik.com/free-vector/english-word-education-banner_66675-157.jpg?size=626&ext=jpg"
-                alt="Thumbnai card"
-              />
-              <div class="card_body">
-                <h3>Title card content</h3>
-                <p>Description card content</p>
-              </div>
-            </div>
-          </nuxt-link>
-        </li>
-        <li>
-          <nuxt-link class="deck" to="/decks/3">
-            <div class="card deck-card">
-              <img
-                src="https://img.freepik.com/free-vector/english-word-education-banner_66675-157.jpg?size=626&ext=jpg"
-                alt="Thumbnai card"
-              />
-              <div class="card_body">
-                <h3>Title card content</h3>
-                <p>Description card content</p>
-              </div>
-            </div>
-          </nuxt-link>
-        </li>
+        <deck-list
+          v-for="deck in decks"
+          :key="deck._id"
+          :name="deck.name"
+          :decription="deck.decription"
+          :thumbnail="deck.thumbnail"
+        />
       </ul>
     </div>
-    <v-modal name="test">
+    <!-- Modal -->
+    <v-modal name="CreateDeckModal">
       <div class="test__body">
-        <h1>Hello test Model</h1>
-        <button class="btn btn_danger" @click.prevent="closeModal">
-          Close Model
-        </button>
+        <h1>Create a new Deck</h1>
+        <form action="">
+          <div class="form_group">
+            <lable for="">Name:</lable>
+            <input
+              class="form_control"
+              type="text"
+              placeholder="Please enter name deck"
+            />
+          </div>
+          <div class="form_group">
+            <lable for="">Description:</lable>
+            <textarea
+              class="form_control"
+              placeholder="Please enter description"
+            ></textarea>
+          </div>
+          <div class="form_group">
+            <lable for="">Thumbnai:</lable>
+            <input type="file" />
+            <div class="preview"></div>
+          </div>
+          <div class="form_group d_flex justify_content_end">
+            <button class="btn btn_danger" @click.prevent="closeModal">
+              Close Model
+            </button>
+            <button class="btn btn_success ml_3" @click.prevent="createModal">
+              Create
+            </button>
+          </div>
+        </form>
       </div>
     </v-modal>
   </div>
 </template>
 
 <script>
+import DeckList from '@/components/Decks/DeckList'
+
 export default {
+  components: {
+    DeckList,
+  },
+  data() {
+    return {
+      decks: [
+        {
+          _id: 1,
+          name: 'Learn English',
+          decription:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting's industry. Lorem Ipsum has been the industrys standard dummy",
+          thumbnail:
+            'https://img.freepik.com/free-vector/english-word-education-banner_66675-157.jpg?size=626&ext=jpg',
+        },
+        {
+          _id: 2,
+          name: 'Learn Japan 2',
+          decription:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting's industry. Lorem Ipsum has been the industrys standard dummy",
+          thumbnail:
+            'https://img.freepik.com/free-vector/english-word-education-banner_66675-157.jpg?size=626&ext=jpg',
+        },
+        {
+          _id: 3,
+          name: 'Learn VietName 3',
+          decription:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting's industry. Lorem Ipsum has been the industrys standard dummy",
+          thumbnail:
+            'https://img.freepik.com/free-vector/english-word-education-banner_66675-157.jpg?size=626&ext=jpg',
+        },
+      ],
+    }
+  },
   methods: {
     openModal() {
-      this.$modal.open({ name: 'test' })
+      this.$modal.open({ name: 'CreateDeckModal' })
     },
     closeModal() {
-      this.$modal.close({ name: 'test' })
+      this.$modal.close({ name: 'CreateDeckModal' })
     },
   },
 }
