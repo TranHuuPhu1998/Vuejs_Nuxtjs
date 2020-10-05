@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 <template>
   <div>
     <div class="ct">
@@ -10,6 +11,7 @@
       <ul class="decks-list">
         <deck-list
           v-for="deck in decks"
+          :id="deck._id"
           :key="deck._id"
           :name="deck.name"
           :decription="deck.decription"
@@ -23,23 +25,25 @@
         <h1>Create a new Deck</h1>
         <form action="">
           <div class="form_group">
-            <lable for="">Name:</lable>
+            <lable for="name">Name:</lable>
             <input
               class="form_control"
               type="text"
+              name="name"
               placeholder="Please enter name deck"
             />
           </div>
           <div class="form_group">
-            <lable for="">Description:</lable>
+            <lable for="Description">Description:</lable>
             <textarea
               class="form_control"
               placeholder="Please enter description"
+              name="Description"
             ></textarea>
           </div>
           <div class="form_group">
-            <lable for="">Thumbnai:</lable>
-            <input type="file" />
+            <lable for="Thumbnai">Thumbnai:</lable>
+            <input type="file" name="Thumbnai" />
             <div class="preview"></div>
           </div>
           <div class="form_group d_flex justify_content_end">
@@ -63,35 +67,11 @@ export default {
   components: {
     DeckList,
   },
-  data() {
-    return {
-      decks: [
-        {
-          _id: 1,
-          name: 'Learn English',
-          decription:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting's industry. Lorem Ipsum has been the industrys standard dummy",
-          thumbnail:
-            'https://img.freepik.com/free-vector/english-word-education-banner_66675-157.jpg?size=626&ext=jpg',
-        },
-        {
-          _id: 2,
-          name: 'Learn Japan 2',
-          decription:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting's industry. Lorem Ipsum has been the industrys standard dummy",
-          thumbnail:
-            'https://img.freepik.com/free-vector/english-word-education-banner_66675-157.jpg?size=626&ext=jpg',
-        },
-        {
-          _id: 3,
-          name: 'Learn VietName 3',
-          decription:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting's industry. Lorem Ipsum has been the industrys standard dummy",
-          thumbnail:
-            'https://img.freepik.com/free-vector/english-word-education-banner_66675-157.jpg?size=626&ext=jpg',
-        },
-      ],
-    }
+
+  computed: {
+    decks() {
+      return this.$store.getters.decks
+    },
   },
   methods: {
     openModal() {

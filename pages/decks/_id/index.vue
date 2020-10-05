@@ -53,7 +53,7 @@
             <button class="btn btn_danger" @click.prevent="closeModal">
               Close Model
             </button>
-            <button class="btn btn_success ml_3" @click.prevent="createModal">
+            <button class="btn btn_success ml_3" @click.prevent="openModal">
               Create
             </button>
           </div>
@@ -69,35 +69,46 @@ export default {
   components: {
     CardList,
   },
-  data() {
-    return {
-      cards: [
-        {
-          _id: 1,
-          picture:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSafcfc-8PuUquB4iS9Xtvy9oXursOo9AHZBg&usqp=CAU',
-          keyword: 'English 1',
-        },
-        {
-          _id: 2,
-          picture:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSafcfc-8PuUquB4iS9Xtvy9oXursOo9AHZBg&usqp=CAU',
-          keyword: 'English 2',
-        },
-        {
-          _id: 3,
-          picture:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSafcfc-8PuUquB4iS9Xtvy9oXursOo9AHZBg&usqp=CAU',
-          keyword: 'English 3',
-        },
-        {
-          _id: 4,
-          picture:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSafcfc-8PuUquB4iS9Xtvy9oXursOo9AHZBg&usqp=CAU',
-          keyword: 'English 4',
-        },
-      ],
-    }
+  asyncData(context) {
+    return new Promise((resolve, reject) => {
+      // eslint-disable-next-line nuxt/no-timing-in-fetch-data
+      setTimeout(() => {
+        resolve({
+          cards: [
+            {
+              _id: 1,
+              picture:
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSafcfc-8PuUquB4iS9Xtvy9oXursOo9AHZBg&usqp=CAU',
+              keyword: 'English 1',
+            },
+            {
+              _id: 2,
+              picture:
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSafcfc-8PuUquB4iS9Xtvy9oXursOo9AHZBg&usqp=CAU',
+              keyword: 'English 2',
+            },
+            {
+              _id: 3,
+              picture:
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSafcfc-8PuUquB4iS9Xtvy9oXursOo9AHZBg&usqp=CAU',
+              keyword: 'English 3',
+            },
+            {
+              _id: 4,
+              picture:
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSafcfc-8PuUquB4iS9Xtvy9oXursOo9AHZBg&usqp=CAU',
+              keyword: 'English 4',
+            },
+          ],
+        })
+      }, 1500)
+    })
+      .then((data) => {
+        return data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   },
   methods: {
     openModal() {
