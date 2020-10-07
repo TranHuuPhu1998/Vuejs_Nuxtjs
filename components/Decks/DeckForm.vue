@@ -3,16 +3,17 @@
     <div class="form_group">
       <lable for="name">Name:</lable>
       <input
+        id="name"
         v-model="editedDeck.name"
         class="form_control"
         type="text"
-        name="name"
         placeholder="Please enter name deck"
       />
     </div>
     <div class="form_group">
-      <lable for="Description">Description:</lable>
+      <p for="Description">Description:</p>
       <textarea
+        id="Description"
         v-model="editedDeck.description"
         class="form_control"
         placeholder="Please enter description"
@@ -20,16 +21,18 @@
       ></textarea>
     </div>
     <div class="form_group">
-      <lable for="Thumbnai">Thumbnai:</lable>
+      <p for="Thumbnai">Thumbnai:</p>
       <input
+        id="Thumbnai"
         v-model="editedDeck.thumbnail"
         type="text"
         placeholder="https://example.com/foo.png"
+        name="Thumbnai"
       />
       <div class="preview"></div>
     </div>
     <div class="form_group d_flex justify_content_end">
-      <button class="btn btn_danger" type="submit" @click.prevent="closeModal">
+      <button class="btn btn_danger" type="button" @click.prevent="closeModal">
         Close Model
       </button>
       <button class="btn btn_success ml_3" type="submit">
@@ -41,6 +44,7 @@
 
 <script>
 export default {
+  name: 'DeckForm',
   props: {
     deck: {
       type: Object,

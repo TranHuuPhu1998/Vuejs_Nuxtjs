@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 <template>
   <section>
     <div class="r">
@@ -18,6 +17,12 @@
           >
             Edit Deck
           </button>
+          <button
+            class="btn btn_success"
+            @click.prevent="openModal('DeleteDeckModal')"
+          >
+            Delete Deck
+          </button>
         </div>
         <hr class="devide" />
         <div class="r cards">
@@ -35,10 +40,11 @@
     <v-modal name="CreateCardModal">
       <div class="test__body">
         <h1>Create a new Card</h1>
-        <form action="">
+        <form @submit.prevent="openModal">
           <div class="form_group">
-            <lable for="name">Name:</lable>
+            <label for="namef">Name:</label>
             <input
+              id="namef"
               class="form_control"
               name="name"
               type="text"
@@ -46,7 +52,7 @@
             />
           </div>
           <div class="form_group">
-            <lable for="Description">Description:</lable>
+            <p for="Description">Description:</p>
             <textarea
               class="form_control"
               name="Description"
@@ -54,7 +60,7 @@
             ></textarea>
           </div>
           <div class="form_group">
-            <lable for="Thumbnai">Thumbnai:</lable>
+            <p for="Thumbnai">Thumbnai:</p>
 
             <input type="file" name="file" />
             <div class="preview"></div>
@@ -127,13 +133,24 @@ export default {
   },
   methods: {
     openModal(name) {
-      if (name === 'CreateCardModal') {
-        this.$modal.open({ name: 'CreateCardModal' })
-      } else if (name === 'DeckFromModal') {
-        this.$modal.open({
-          name: 'DeckFromModal',
-          payload: { ...this.deck, id: this.$route.params.id },
-        })
+      switch (name) {
+        case 'CreateCardModal':
+          this.$modal.open({ name: 'CreateCardModal' })
+          break
+        case 'DeckFromModal':
+          this.$modal.open({
+            name: 'DeckFromModal',
+            payload: { ...this.deck, id: this.$route.params.id },
+          })
+          break
+        case 'DeleteDeckModal':
+          this.$modal.open({
+            name: 'DeleteDeckModal',
+            payload: { ...this.deck, id: this.$route.params.id },
+          })
+          break
+        default:
+          break
       }
     },
     closeModal() {
