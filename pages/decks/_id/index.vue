@@ -1,12 +1,22 @@
+/* eslint-disable no-console */
 <template>
   <section>
     <div class="r">
       <div class="ct text_center">
-        <h3>Deck: Learn English {{ $route.params.id }}</h3>
+        <h3>Deck {{ deck.name }}</h3>
         <div class="tools">
           <button class="btn btn_success">Start now!</button>
-          <button class="btn btn_primary" @click.prevent="openModal">
+          <button
+            class="btn btn_primary"
+            @click.prevent="openModal('CreateCardModal')"
+          >
             Create a card
+          </button>
+          <button
+            class="btn btn_warning"
+            @click.prevent="openModal('DeckFromModal')"
+          >
+            Edit Deck
           </button>
         </div>
         <hr class="devide" />
@@ -64,55 +74,67 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 import CardList from '@/components/Cards/CardList'
 export default {
   components: {
     CardList,
   },
   asyncData(context) {
-    return new Promise((resolve, reject) => {
-      // eslint-disable-next-line nuxt/no-timing-in-fetch-data
-      setTimeout(() => {
-        resolve({
-          cards: [
-            {
-              _id: 1,
-              picture:
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSafcfc-8PuUquB4iS9Xtvy9oXursOo9AHZBg&usqp=CAU',
-              keyword: 'English 1',
-            },
-            {
-              _id: 2,
-              picture:
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSafcfc-8PuUquB4iS9Xtvy9oXursOo9AHZBg&usqp=CAU',
-              keyword: 'English 2',
-            },
-            {
-              _id: 3,
-              picture:
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSafcfc-8PuUquB4iS9Xtvy9oXursOo9AHZBg&usqp=CAU',
-              keyword: 'English 3',
-            },
-            {
-              _id: 4,
-              picture:
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSafcfc-8PuUquB4iS9Xtvy9oXursOo9AHZBg&usqp=CAU',
-              keyword: 'English 4',
-            },
-          ],
-        })
-      }, 1500)
-    })
-      .then((data) => {
-        return data
+    return axios
+      .get(
+        `https://nuxt-learing-english.firebaseio.com/decks/${context.params.id}.json`
+      )
+      .then((response) => {
+        return {
+          deck: response.data,
+        }
       })
-      .catch((err) => {
-        console.log(err)
+      .catch((e) => {
+        context.error(e)
       })
   },
+  data() {
+    return {
+      cards: [
+        {
+          _id: 1,
+          picture:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSafcfc-8PuUquB4iS9Xtvy9oXursOo9AHZBg&usqp=CAU',
+          keyword: 'English 1',
+        },
+        {
+          _id: 2,
+          picture:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSafcfc-8PuUquB4iS9Xtvy9oXursOo9AHZBg&usqp=CAU',
+          keyword: 'English 2',
+        },
+        {
+          _id: 3,
+          picture:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSafcfc-8PuUquB4iS9Xtvy9oXursOo9AHZBg&usqp=CAU',
+          keyword: 'English 3',
+        },
+        {
+          _id: 4,
+          picture:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSafcfc-8PuUquB4iS9Xtvy9oXursOo9AHZBg&usqp=CAU',
+          keyword: 'English 4',
+        },
+      ],
+    }
+  },
   methods: {
-    openModal() {
-      this.$modal.open({ name: 'CreateCardModal' })
+    openModal(name) {
+      if (name === 'CreateCardModal') {
+        this.$modal.open({ name: 'CreateCardModal' })
+      } else if (name === 'DeckFromModal') {
+        this.$modal.open({
+          name: 'DeckFromModal',
+          payload: { ...this.deck, id: this.$route.params.id },
+        })
+      }
     },
     closeModal() {
       this.$modal.close({ name: 'CreateCardModal' })

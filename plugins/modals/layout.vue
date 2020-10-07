@@ -45,11 +45,12 @@ export default {
     })
   },
   methods: {
-    open(params) {
-      this.visible = true
-    },
     close(params) {
       this.visible = false
+    },
+    open(params) {
+      this.payload = params.payload
+      this.visible = true
     },
   },
 }
