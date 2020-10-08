@@ -1,5 +1,6 @@
 <template>
   <div class="ct">
+    <event-alert />
     <div class="banner">
       <div class="thumbnail-banner">
         <img src="~assets/images/banner.jpg" alt="banner" />
@@ -37,6 +38,12 @@ export default {
         },
       ],
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+      setTimeout(() => this.$nuxt.$loading.finish(), 1000)
+    })
   },
 }
 </script>

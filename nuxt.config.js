@@ -1,7 +1,7 @@
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'first-project',
+    title: 'Learning English',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -9,19 +9,37 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel:'stylesheet', 
-      href:'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap'}
+      {
+        rel: 'stylesheet',
+        href:
+          'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap',
+      },
     ],
   },
+  // Khi chạy Nuxt.js ở chế độ SPA, không có nội dung nào từ phía máy chủ khi
+  // tải trang đầu tiên. Vì vậy, thay vì hiển thị một trang trống trong khi
+  // tải trang, Nuxt.js cung cấp cho bạn một con quay mà bạn có thể tùy
+  // chỉnh để thêm màu hoặc nền của riêng mình và thậm chí thay đổi chỉ báo.
+  loadingIndicator: {
+    name: 'chasing-dots',
+    color: 'purple',
+    background: 'green',
+  },
+  // Customize the progress-bar color based
+  loading: {
+    color: 'DodgerBlue',
+    height: '4px',
+    continuous: true,
+    duration: 3000,
+  },
+  // Customize Loadding components ,
+  // loading: '~/components/Loading/LoadingBar.vue',
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [
-    '~/assets/css/rhpteam.css',
-    '~/assets/css/external.css'
-  ],
+  css: ['~/assets/css/rhpteam.css', '~/assets/css/external.css'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['@/plugins/modals/v-modal.js'],
+  plugins: ['@/plugins/core-component.js', '@/plugins/modals/v-modal.js'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -45,7 +63,10 @@ export default {
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    baseURL:
+      process.env.BASE_API_URL || 'https://nuxt-learing-english.firebaseio.com',
+  },
 
   // Content module configuration (https://go.nuxtjs.dev/content-config)
   content: {},
@@ -61,11 +82,20 @@ export default {
           loader: 'eslint-loader',
           exclude: /(node_modules)/,
           options: {
-            fix: true
-          }
+            fix: true,
+          },
         })
       }
-    }
-  }
+    },
+  },
 
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://locahost:3000',
+    baseApiUrl:
+      process.env.BASE_API_URL || 'https://nuxt-learing-english.firebaseio.com',
+  },
+
+  router: {
+    middleware: 'router-log',
+  },
 }

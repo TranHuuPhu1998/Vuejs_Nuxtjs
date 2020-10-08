@@ -80,21 +80,17 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 import CardList from '@/components/Cards/CardList'
 export default {
   components: {
     CardList,
   },
   asyncData(context) {
-    return axios
-      .get(
-        `https://nuxt-learing-english.firebaseio.com/decks/${context.params.id}.json`
-      )
-      .then((response) => {
+    return context.app.$axios
+      .$get(`${process.env.baseApiUrl}/decks/${context.params.id}.json`)
+      .then((data) => {
         return {
-          deck: response.data,
+          deck: data,
         }
       })
       .catch((e) => {
@@ -156,6 +152,11 @@ export default {
     closeModal() {
       this.$modal.close({ name: 'CreateCardModal' })
     },
+  },
+  head() {
+    return {
+      title: `Deck: ${this.deck.name} | Learing Leanguges`,
+    }
   },
 }
 </script>

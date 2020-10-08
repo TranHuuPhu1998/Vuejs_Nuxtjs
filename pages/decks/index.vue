@@ -41,6 +41,9 @@ export default {
       this.$modal.open({ name: 'DeckFromModal' })
     },
   },
+  head: {
+    title: 'Own Decks | Learning English',
+  },
 }
 </script>
 
