@@ -2,7 +2,7 @@
   <section class="page">
     <div class="card card-form">
       <div class="card_body">
-        <h3 class="text_center">Resginter</h3>
+        <h3 class="text_center">Login</h3>
         <form @submit.prevent="onSubmit">
           <div class="form-group">
             <label for="email">Email</label>
@@ -24,26 +24,16 @@
               placeholder="Please enter password"
             />
           </div>
-          <div class="form-group">
-            <label for="re-password">Re-Password</label>
-            <input
-              id="re-password"
-              v-model="rePassword"
-              type="password"
-              class="form_control"
-              placeholder="Please enter re-password"
-            />
-          </div>
           <div class="form-group my_3">
             <button type="submit" class="btn btn_success btn-submit">
-              Resginter
+              Login
             </button>
           </div>
         </form>
         <div class="other text_center">
           <span
             >Have your accounts?
-            <nuxt-link to="/login" tag="a">Login hear</nuxt-link></span
+            <nuxt-link to="/register" tag="a">Resginter hear</nuxt-link></span
           >
         </div>
       </div>
@@ -58,31 +48,28 @@ export default {
     return {
       email: '',
       password: '',
-      rePassword: '',
+      isLogin: true,
     }
   },
   methods: {
-    checkValidPassword() {
-      return this.password === this.rePassword
-    },
     onSubmit() {
-      const validPassword = this.checkValidPassword()
-
-      if (validPassword) {
-        this.$store
-          .dispatch('authenticateUser', {
-            email: this.email,
-            password: this.password,
-          })
-          .then((result) => {
-            if (result.success) {
-              this.$router.push('/login')
-            }
-          })
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('Password is not valid')
-      }
+      this.$store
+        .dispatch('authenticateUser', {
+          email: this.email,
+          password: this.password,
+          isLogin: this.isLogin,
+        })
+        .then((result) => {
+          // eslint-disable-next-line no-console
+          console.log('onSubmit -> result', result)
+          if (result.success) {
+            this.$router.push('/')
+          }
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log(error)
+        })
     },
   },
 }
