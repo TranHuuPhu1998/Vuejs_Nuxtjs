@@ -93,6 +93,7 @@ export default {
     baseUrl: process.env.BASE_URL || 'http://locahost:3000',
     baseApiUrl:
       process.env.BASE_API_URL || 'https://nuxt-learing-english.firebaseio.com',
+    fbApiKey: 'AIzaSyDomvaDz8RaNP- z5klu688qE_oEf6m0ZdY',
   },
 
   router: {
