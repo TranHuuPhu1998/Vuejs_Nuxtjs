@@ -26,6 +26,9 @@ const createStore = () => {
       setDecks(state, decks) {
         state.decks = decks
       },
+      clearToken(state) {
+        state.token = null
+      },
       setToken(state, token) {
         state.token = token
       },
@@ -77,6 +80,12 @@ const createStore = () => {
             // eslint-disable-next-line no-console
             .then((result) => {
               vuexContent.commit('setToken', result.idToken)
+              localStorage.setItem('token', result.idToken)
+              localStorage.setItem(
+                'tokenExpiration',
+                new Date().getTime() + result.expiresIn * 1000
+              )
+              vuexContent.dispatch('setLogoutTimer', result.expiresIn * 1000)
               resolve({ success: true })
             })
             .catch((e) => {
@@ -116,13 +125,29 @@ const createStore = () => {
             console.log(e)
           })
       },
+      setLogoutTimer(vuexContent, duration) {
+        setTimeout(() => {
+          vuexContent.commit('clearToken')
+        }, duration)
+      },
       setDecks(vuexContent, decks) {
         vuexContent.commit('setDecks', decks)
+      },
+      initAuth(vuexContent) {
+        const token = localStorage.getItem('token')
+        const tokenExpiration = localStorage.getItem('tokenExpiration')
+
+        if (new Date().getTime() > tokenExpiration || token) return false
+
+        vuexContent.commit('setToken', token)
       },
     },
     getters: {
       decks(state) {
         return state.decks
+      },
+      isAuthenticated(state) {
+        return state.token != null
       },
     },
   })

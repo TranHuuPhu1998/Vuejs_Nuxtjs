@@ -16,6 +16,13 @@
     <nuxt-child />
   </div>
 </template>
+
+<script>
+export default {
+  middleware: ['check-auth', 'auth'],
+}
+</script>
+
 <style lang="scss" scoped>
 .page {
   display: flex;

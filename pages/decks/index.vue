@@ -27,6 +27,7 @@
 import DeckList from '@/components/Decks/DeckList'
 
 export default {
+  middleware: ['check-auth', 'auth'],
   components: {
     DeckList,
   },
