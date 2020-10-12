@@ -1,5 +1,6 @@
+/* eslint-disable no-console */
 import Vuex from 'vuex'
-
+import Cookies from 'js-cookie'
 const createStore = () => {
   return new Vuex.Store({
     state: {
@@ -85,6 +86,12 @@ const createStore = () => {
                 'tokenExpiration',
                 new Date().getTime() + result.expiresIn * 1000
               )
+
+              Cookies.set('token', result.idToken)
+              Cookies.set(
+                'tokenExpiration',
+                new Date().getTime() + result.expiresIn * 1000
+              )
               vuexContent.dispatch('setLogoutTimer', result.expiresIn * 1000)
               resolve({ success: true })
             })
@@ -133,12 +140,35 @@ const createStore = () => {
       setDecks(vuexContent, decks) {
         vuexContent.commit('setDecks', decks)
       },
-      initAuth(vuexContent) {
-        const token = localStorage.getItem('token')
-        const tokenExpiration = localStorage.getItem('tokenExpiration')
+      initAuth(vuexContent, req) {
+        let token, tokenExpiration
+        if (req) {
+          // Handle first time go to page
+          if (!req.headers.cookie) return false
 
-        if (new Date().getTime() > tokenExpiration || token) return false
+          const tokenKey = req.headers.cookie
+            .split(';')
+            .find((c) => c.trim().startsWith('token='))
+          const tokenExpirationKey = req.headers.cookie
+            .split(';')
+            .find((c) => c.trim().startsWith('tokenExpiration='))
+          // eslint-disable-next-line prettier/prettier
+          console.log('initAuth -> !tokenKey', !tokenKey)
+          if (!tokenKey || !tokenExpirationKey) return false
 
+          token = tokenKey.split('=')[1]
+          tokenExpiration = tokenExpirationKey.split('=')[1]
+        } else {
+          token = localStorage.getItem('token')
+          tokenExpiration = localStorage.getItem('tokenExpiration')
+
+          if (new Date().getTime() > tokenExpiration || !token) return false
+        }
+
+        vuexContent.dispatch(
+          'setLogoutTimer',
+          tokenExpiration - new Date().getTime()
+        )
         vuexContent.commit('setToken', token)
       },
     },
